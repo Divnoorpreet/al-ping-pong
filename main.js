@@ -163,6 +163,10 @@ function paddleInCanvas(){
   }  
 }
 
+rightwristX = 0;
+rightwristY = 0;
+rightwrist_score = 0;
+
 function preload(){
 
 }
@@ -182,10 +186,20 @@ function modelLoaded(){
   console.log("Modal Loaded");
 }
 
-function gotPoses(){
-
+function gotPoses(results){
+  if(results.length > 0){
+    rightwristX = results[0].pose.rightWrist.x;
+    rightwristY = results[0].pose.rightWrist.y;
+    rightwrist_score = results[0].pose.keypoints[10];
+    console.log(rightwrist_score);
+  }
 }
 
 function draw(){
   image(video,0,0,550,400);
+  if(rightwrist_score > 0.2){
+    fill("#FDFEFE");
+    stroke("#FDFEFE");
+    circle(rightwristX,rightwristY,25);
+  }
 }
